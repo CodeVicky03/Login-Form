@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup Form</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Burned&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <style>
+      .form-section {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="body">
+    <div class="login-form">
+      <h3>Signup Form</h3>
+      <ul>
+        <li>Name <i class="fa-solid fa-circle-check icon"></i></li>
+        <li>Contact <i class="fa-solid fa-circle-check icon"></i></li>
+        <li>Birth <i class="fa-solid fa-circle-check icon"></i></li>
+        <li>Email <i class="fa-solid fa-circle-check icon"></i></li>
+      </ul>
+
+      <section class="form-section">
+        <p>Personal info:</p>
+        <div class="input">
+          <label>Name</label>
+          <input type="text" />
+        </div>
+      </section>
+
+      <section class="form-section">
+        <p>Contact info:</p>
+        <div class="input">
+          <label>Number</label>
+          <input type="number" />
+        </div>
+      </section>
+
+      <section class="form-section">
+        <p>Date of Birth:</p>
+        <div class="input">
+          <label>DOB</label>
+          <input type="date"/>
+        </div>
+      </section>
+
+      <section class="form-section" style="margin-top: -10px">
+        <p>Email:</p>
+        <div class="input" style="margin-top: -10px">
+          <label>Email</label>
+          <input type="email" style="margin-bottom: 6px" />
+          <label>Password</label>
+          <input type="password" style="margin-bottom: 16px" />
+        </div>
+      </section>
+
+      <div class="btn">
+        <button type="button" id="btnPrev">Previous</button>
+        <button type="button" id="btnNext">Next</button>
+      </div>
+      <div class="circle"></div>
+    </div>
+</div>
+    <script>
+      const sections = document.querySelectorAll(".form-section");
+      const icons = document.querySelectorAll(".icon");
+      const circle = document.querySelector(".circle");
+      let currentSectionIndex = 0;
+      var scale = 1;
+
+      sections[currentSectionIndex].style.display = "block";
+      icons[currentSectionIndex].style.color = "red";
+
+      const btnNext = document.getElementById("btnNext");
+      const btnPrev = document.getElementById("btnPrev");
+
+      function updateIconColors() {
+        icons.forEach((icon, index) => {
+          icon.style.color =
+            index + 1 <= currentSectionIndex
+              ? "rgb(3, 218, 3)"
+              : "rgba(0, 0, 0, 0.699)";
+        });
+      }
+
+      function isInputFilled(section) {
+        const input = section.querySelector("input");
+        return input && input.value.trim() !== "";
+      }
+
+      btnNext.addEventListener("click", function () {
+        if (currentSectionIndex < sections.length) {
+          if (isInputFilled(sections[currentSectionIndex])) {
+            sections[currentSectionIndex].style.display = "none";
+            currentSectionIndex++;
+            scale++;
+            circle.style.scale = scale;
+            if (currentSectionIndex < sections.length) {
+              sections[currentSectionIndex].style.display = "block";
+            }
+            updateIconColors();
+          } else {
+            icons[currentSectionIndex].style.color = "red";
+          }
+        }
+      });
+
+      btnPrev.addEventListener("click", function () {
+        if (currentSectionIndex > 0) {
+          sections[currentSectionIndex].style.display = "none";
+          currentSectionIndex--;
+          scale--;
+          circle.style.scale = scale;
+          if (currentSectionIndex < sections.length) {
+            sections[currentSectionIndex].style.display = "block";
+          }
+          updateIconColors();
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<!--     
+        <script>
+          const sections = document.querySelectorAll(".form-section");
+          const icons = document.querySelectorAll(".icon");
+          let currentSectionIndex = 0;
+    
+          sections[currentSectionIndex].style.display = "block";
+          icons[currentSectionIndex].style.color = "red";
+    
+          const btnNext = document.getElementById("btnNext");
+          const btnPrev = document.getElementById("btnPrev");
+    
+          function updateIconColors() {
+            icons.forEach((icon, index) => {
+              icon.style.color =
+                index + 1 <= currentSectionIndex ? "rgb(3, 218, 3)" : "rgba(0, 0, 0, 0.699)";
+            });
+          }
+    
+          function isInputFilled(section) {
+            const input = section.querySelector("input");
+            return input && input.value.trim() !== "";
+          }
+    
+          btnNext.addEventListener("click", function () {
+            if (currentSectionIndex < sections.length - 1) {
+              if (isInputFilled(sections[currentSectionIndex])) {
+                sections[currentSectionIndex].style.display = "none";
+                currentSectionIndex++;
+                sections[currentSectionIndex].style.display = "block";
+                updateIconColors();
+              } else {
+                alert(
+                  "Please fill out the current section before moving to the next."
+                );
+                icons[currentSectionIndex].style.color = "red";
+              }
+            }
+          });
+    
+          btnPrev.addEventListener("click", function () {
+            if (currentSectionIndex > 0) {
+              sections[currentSectionIndex].style.display = "none";
+              currentSectionIndex--;
+              sections[currentSectionIndex].style.display = "block";
+              updateIconColors();
+            }
+          });
+        </script> -->
